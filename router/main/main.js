@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
 
 router.get('/', function(req, res){
     console.log('router loaded...');
-    res.sendFile(path.join(__dirname , "../public/main.html"));
+    res.sendFile(path.join(__dirname , "../../public/main.html"));
     // res.sendFile("../public/main.html");
 })
 
