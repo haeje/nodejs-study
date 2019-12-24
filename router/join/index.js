@@ -58,7 +58,6 @@ router.post('/', passport.authenticate('local', { successRedirect: '/main',
                                                         failureFlash: true })
 );
 
-console.log('git commit test');
 
 
 // router.post('/', function(req, res){
