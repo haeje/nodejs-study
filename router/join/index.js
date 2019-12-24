@@ -41,7 +41,12 @@ passport.use(new LocalStrategy({
         console.log('exist user email');
         return done(null, false, {message : 'your email is alread used'});
       }else {
-
+        const sql = `insert into userinfo set ?`;
+        const obj = {email, password};
+        var query = connection.query(sq, obj, function(err, rows){
+          if( err ) throw err;
+          return done(null, {"email" : email, 'id' : rows.insertId})
+        })
       }
     })
     
@@ -53,6 +58,7 @@ router.post('/', passport.authenticate('local', { successRedirect: '/main',
                                                         failureFlash: true })
 );
 
+console.log('git push test');
 
 
 // router.post('/', function(req, res){
