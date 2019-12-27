@@ -17,14 +17,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
 }))
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(router);
 
 app.listen(3000, ()=>{

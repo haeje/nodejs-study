@@ -19,6 +19,18 @@ var connection = mysql.createConnection({
   connection.connect();
 
 
+passport.serializeUser(function(user, done) {
+  console.log('serializeUser',user);
+  
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  console.log('deserializeUser',id);
+
+    done(null, id);
+});
+
 router.get('/', function(req, res){
     var msg;
     var errMsg = req.flash('error');
@@ -28,7 +40,7 @@ router.get('/', function(req, res){
 })
 
 
-passport.use(new LocalStrategy({
+passport.use('local-join',new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback : true
@@ -43,7 +55,7 @@ passport.use(new LocalStrategy({
       }else {
         const sql = `insert into userinfo set ?`;
         const obj = {email, password};
-        var query = connection.query(sq, obj, function(err, rows){
+        var query = connection.query(sql, obj, function(err, rows){
           if( err ) throw err;
           return done(null, {"email" : email, 'id' : rows.insertId})
         })
@@ -53,7 +65,7 @@ passport.use(new LocalStrategy({
   }
 ));
 
-router.post('/', passport.authenticate('local', { successRedirect: '/main',
+router.post('/', passport.authenticate('local-join', { successRedirect: '/',
                                                         failureRedirect: '/join',
                                                         failureFlash: true })
 );

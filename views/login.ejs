@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login" method="POST">
+        email <input type="text" name="email">
+        password <input type="text" name="password">
+        <input type="submit">
+    </form>
+    <br>
+
+    <div class="demo"></div>
+    <button class="ajax-send-btn">ajax</button>
+    <div class="result"></div>
+
+    <script>
+        document.querySelector('.ajax-send-btn').addEventListener('click', function(){
+            const email = document.forms[0].elements[0].value;
+            const password = document.forms[0].elements[1].value;
+            
+            const xhttp = new XMLHttpRequest();
+
+            var ajaxdata = { email, password };
+            xhttp.open("POST", "http://127.0.0.1:3000/login");
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(ajaxdata));     
+            xhttp.addEventListener('load', function(){
+                var result = JSON.parse(xhttp.responseText);
+                console.log('result', result);
+                
+                if( result.email ) {
+                    console.log('hi');
+                    
+                    // window.location.href ="/main";
+                }
+                document.querySelector('.result').innerHTML = result.data;
+            })       
+        });
+
+        
+    </script>
+</body>
+</html>

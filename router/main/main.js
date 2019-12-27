@@ -15,9 +15,11 @@ var connection = mysql.createConnection({
   connection.connect();
 
 router.get('/', function(req, res){
-    console.log('router loaded...');
-    res.sendFile(path.join(__dirname , "../../public/main.html"));
-    // res.sendFile("../public/main.html");
+  console.log('/main.js', req.user);
+  
+  const id = req.user;
+  // if( !id ) res.redirect('/login');
+   res.render('main.ejs', {'id':req.user})
 })
 
 
